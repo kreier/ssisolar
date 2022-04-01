@@ -14,8 +14,8 @@ from adafruit_io.adafruit_io import IO_MQTT
 ## Set up analog in
 from analogio import AnalogIn
 
-input_voltage_1 = AnalogIn(board.A0)
-input_voltage_2 = AnalogIn(board.A5)
+input_voltage_1 = AnalogIn(board.A0)   # the current over 0.5 Ohm as voltage
+input_voltage_2 = AnalogIn(board.A5)   # the solar voltage divided by 5.7
 
 def get_voltage(pin):
     return (pin.value * 3.3) / 65536
@@ -114,23 +114,32 @@ io.connect()
 
 # Below is an example of manually publishing a new  value to Adafruit IO.
 last = 0
-print("Publishing a new message every 5 seconds...")
+print("Publishing a new message every 20 seconds...")
 while True:
     # Explicitly pump the message loop.
-
+    
     # Send a new message every 5 seconds.
     if (time.monotonic() - last) >= 20:
-        input_value_1 = get_voltage(input_voltage_1)
-        input_value_2 = get_voltage(input_voltage_2)
+        input_value_1 = get_voltage(input_voltage_1) * 3 # the current over 0.5 Ohm as voltage
+        # offset correction: the measured solar voltage includes the voltage drop over the 
+        # 0.5 Ohm current resistor. But now we've taken this measurement and can subtract
+        # it to get the correct value: input_voltage_1 is now the voltage over a 0.5 Ohm
+        # resistor times 3, so we could subtract this value divided by 3 from the solar voltage
+        # the voltage we measure is the solar voltage divided by 5.7 (47 kOhm and 10 kOhm series)
+        # so we have to divide the input_value_1 by 3 and 5.7 before subtracting from
+        # the submitted value for input_value_2
+        
+        input_value_2 = get_voltage(input_voltage_2) - (input_value_1 / (3 * 5.7))
+        # the solar voltage divided by 5.7
         print("Publishing {0} and {1} to solar-stuff feeds.".format(input_value_1,input_value_2))
         try:
             io.loop()
             io.publish("solar-stuff-1", input_value_1)
             io.publish("solar-stuff-2", input_value_2)
         except:
-
+            
             while(not_connected):
-                print("reconnecting")
+                print("reconnecting")  
                 io.connect()
                 time.sleep(2.0)
         last = time.monotonic()
