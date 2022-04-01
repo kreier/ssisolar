@@ -30,10 +30,10 @@ With Logger Pro from Vernier we collect current and voltage in parallel. To over
 
 ![2022-03-29](docs/2022-03-29.jpg)
 
-The picture above shows the data collection on our iMac from sunset March 27th to sunset March 29th. Two features stick out: 
+The picture above shows the data collection on our iMac from sunset __March 27th__ to sunset __March 29th__. The two syncronous positive periods in <span style="color:blue">🔵voltage</span> and <span style="color:red">🔴current</span> are sunlight daytime March 28th and 29th. Two features stick out: 
 
-- __Noise:__ With the addition of the Metro ESP32S2, connected via USB to the iMac for power, programming and REPL we also grounded the solar installation itself. The differential voltage and current meters from the Vernier LabQuest setup collected a lot of noise from the 30 long cable to the solar panel, that collected a lot of static noise over the distance.
+- __Noise:__ With the addition of the Metro ESP32S2, connected via USB to the iMac for power, programming and REPL we also grounded the solar installation itself. The differential voltage and current meters from the Vernier LabQuest setup collected a lot of noise from the 30 long cable to the solar panel, that collected a lot of static noise over the distance. The setup was added in the afternoon of March 28th, as seen in the clear lower noise of the red current collection and the drop in measured blue voltage for the solar panel. It now matches the voltage of the battery.
 
-- __Rain at 9:00 PM on March 27th:__ This Monday night a thunderstorm with heavy rain crossed over Saigon. This can be seen in the peak of red current noise during the first night measurement. The voltage stays unaffected at zero.
+- __Rain at 9:00 PM on March 27th:__ This Monday night a thunderstorm with heavy rain crossed over Saigon. This can be seen in the peak of __red current__ noise during the first night measurement. The voltage stays unaffected at zero.
 
 The installation itself collects data since Friday, 2022-03-18.
