@@ -7,8 +7,18 @@ We want to explore the potential and challenges of photovoltaic systems by creat
 
 
 
-
 ## History
+
+### April 1st, 2022
+
+The internet connection is rather unstable or to far away for our ESP32S2. Restarting circuitpython with the REPL or reset starts the transmission, but the rendered graphs connects the last two values with a straight line, which might be confusing. Se the jump in  the voltage measurement (times 5.7) at the beginning of April first:
+
+![2022-04-01 Voltage](docs/2022-04-01_voltage.jpg)
+
+Another update involves the current measurement. With a peak current of 1.5 Ampere the reading would only be 0.75 Volt. Thats small compared to the peak raw voltage measurement of 2 Volt after the 1:5.7 voltage divider. So I multiply the measurement by 3 to give it a comparable range during the day for the combined plot.
+
+![2022-04-01 Current](docs/2022-04-01_current.jpg)
+
 
 ### March 30th, 2022
 
@@ -20,4 +30,10 @@ With Logger Pro from Vernier we collect current and voltage in parallel. To over
 
 ![2022-03-29](docs/2022-03-29.jpg)
 
-More to follow.
+The picture above shows the data collection on our iMac from sunset March 27th to sunset March 29th. Two features stick out: 
+
+- __Noise:__ With the addition of the Metro ESP32S2, connected via USB to the iMac for power, programming and REPL we also grounded the solar installation itself. The differential voltage and current meters from the Vernier LabQuest setup collected a lot of noise from the 30 long cable to the solar panel, that collected a lot of static noise over the distance.
+
+- __Rain at 9:00 PM on March 27th:__ This Monday night a thunderstorm with heavy rain crossed over Saigon. This can be seen in the peak of red current noise during the first night measurement. The voltage stays unaffected at zero.
+
+The installation itself collects data since Friday, 2022-03-18.
