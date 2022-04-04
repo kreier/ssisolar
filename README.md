@@ -1,4 +1,7 @@
 # ssisolar
+[![GitHub release](https://img.shields.io/github/release/kreier/ssisolar.svg)](https://github.com/kreier/ssisolar/releases/)
+[![MIT license](https://img.shields.io/github/license/kreier/ssisolar)](https://kreier.mit-license.org/)
+
 Documentation of Photovoltaic Potential at SSIS
 
 ## Project description
@@ -8,6 +11,14 @@ We want to explore the potential and challenges of photovoltaic systems by creat
 
 
 ## History
+
+### April 4th, 2022
+
+The internet connection was fixed. But we created a memory leak of 1.5 kByte every submisssion (20 seconds) that stopped all transmissions after 8 hours when the 2 MByte heap was depleted. Workaround: call the garbage collecter `` every 20 seconds. Now we collect continoursly data:
+
+![2022-04-04 Combined](docs/2022-04-04.png)
+
+Here green is the voltage over the day and orange the current. Shorty after 12:00 PM clouds covered the sky and it started to rain, as recorded in this diagram. And it was relatively dark after 2:00 PM until the evening.
 
 ### April 1st, 2022
 
