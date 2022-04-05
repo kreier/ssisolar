@@ -16,10 +16,16 @@ We want to explore the potential and challenges of photovoltaic systems by creat
 
 The current measurement for the last 7 days still shows the changes made to code and setup:
 
-![2022-04-06 current](docs/2022-04-06_current)
+![2022-04-06 current](docs/2022-03-30_04-06_current.png)
 
-- **March 29th** The current sensor was connected in the wrong direction and therefore provided with a negative voltage, which resulted in a constant zero reading. After changing in the morning, it started submitting positive data
-- **March 30th** 
+- **March 30th** The current sensor was connected in the wrong direction and therefore provided with a negative voltage, which resulted in a constant zero reading. After changing in the morning, it started submitting positive data
+- **March 31th** Lost connection in the morning. Restarted the Metro ESP32S2 during lunch and current measurement continued (linear jump in graph)
+- **April 1st** To make the current better visible in the combined view we increased the scale by 3. For this example above it now represents the current in Ampere. This lead to the jump in current during the middle of the day.
+- **April 2nd** In the night of April 1st the transmission stopped. We noticed during April 2nd and restarted the Microcontroller. Another linar jump between these to measurements.
+- **April 3rd** After another 8 hours the transmission stopped again. We installed a second internet router right next to the microcontroller and found a memory leak when printing `gc.mem_free()` of about 1.5 kByte each transmission every 20 seconds. After 8 hours the free heap space of 2 MByte was used and the transmission stopped. Workaround: Call `gc.collect()` every 20 seconds.
+- **April 4th** Our system works well, sunshine in the morning, then clouds and rain in the afternoon with significant reduced current output.
+- **April 5th** The rainstorm in the afternoon was even larger, as our data collection documented.
+
 
 
 ### April 4th, 2022
