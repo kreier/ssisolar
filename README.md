@@ -12,9 +12,19 @@ We want to explore the potential and challenges of photovoltaic systems by creat
 
 ## History
 
+### April 6th, 2022
+
+The current measurement for the last 7 days still shows the changes made to code and setup:
+
+![2022-04-06 current](docs/2022-04-06_current)
+
+- **March 29th** The current sensor was connected in the wrong direction and therefore provided with a negative voltage, which resulted in a constant zero reading. After changing in the morning, it started submitting positive data
+- **March 30th** 
+
+
 ### April 4th, 2022
 
-The internet connection was fixed. But we created a memory leak of 1.5 kByte every submisssion (20 seconds) that stopped all transmissions after 8 hours when the 2 MByte heap was depleted. Workaround: call the garbage collecter `` every 20 seconds. Now we collect continoursly data:
+The internet connection was fixed. But we created a memory leak of 1.5 kByte every submisssion (20 seconds) that stopped all transmissions after 8 hours when the 2 MByte heap was depleted. Workaround: call the garbage collector `gc.collect()` every 20 seconds. Now we collect continously data:
 
 ![2022-04-04 Combined](docs/2022-04-04.png)
 
