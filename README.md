@@ -16,7 +16,7 @@ We want to explore the potential and challenges of photovoltaic systems by creat
 
 The current measurement for the last 7 days still shows the changes made to code and setup:
 
-![2022-04-06 current](docs/2022-03-30_04-06_current.png)
+![2022-04-06 current](docs/2022-03-30_04-05_current.png)
 
 - **March 30th** The current sensor was connected in the wrong direction and therefore provided with a negative voltage, which resulted in a constant zero reading. After changing in the morning, it started submitting positive data
 - **March 31th** Lost connection in the morning. Restarted the Metro ESP32S2 during lunch and current measurement continued (linear jump in graph)
