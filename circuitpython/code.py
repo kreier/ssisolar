@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
 # SPDX-License-Identifier: MIT
-import time
+
+import time, gc
 from random import randint
 
 import ssl
@@ -129,9 +130,11 @@ while True:
         # so we have to divide the input_value_1 by 3 and 5.7 before subtracting from
         # the submitted value for input_value_2
         
-        input_value_2 = get_voltage(input_voltage_2) - (input_value_1 / (3 * 5.7))
+        input_value_2 = get_voltage(input_voltage_2) - (input_value_1 / ( 5 ))
         # the solar voltage divided by 5.7
         print("Publishing {0} and {1} to solar-stuff feeds.".format(input_value_1,input_value_2))
+        print(gc.mem_free(), "Bytes RAM free")
+        gc.collect()
         try:
             io.loop()
             io.publish("solar-stuff-1", input_value_1)
