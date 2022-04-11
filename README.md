@@ -8,9 +8,24 @@ Documentation of Photovoltaic Potential at SSIS
 
 We want to explore the potential and challenges of photovoltaic systems by creating and maintaining an example system. For further investigation we want to collect as much data as possible.
 
-
+Here are some current feeds on the Adafruit IO MQTT platform:
+- https://io.adafruit.com/emwdx/dashboards/solar-dash
+- https://io.adafruit.com/emwdx/feeds/solar-stuff-2 for voltage
+- https://io.adafruit.com/emwdx/feeds/solar-stuff-1 for current
+- https://io.adafruit.com/kreier/dashboards/ssis-solar
+- https://io.adafruit.com/kreier/feeds/voltage
+- https://io.adafruit.com/kreier/feeds/current
+- https://io.adafruit.com/kreier/feeds/memory
 
 ## History
+
+### April 11th, 2022
+
+Sometimes the connection to WIFI or Adafruit IO is not successfull on the first attempt. This might throw an error and abort the program. In `version 0.2` we put these requests into a `try:` - `except:` loop, but this causes another problem: The amount of free memory as measured by the garbage collector `gc.mem_free()` is constantly decreasing:
+
+![Decreasing free memory](docs/2022-04-10_memory_leak.jpg)
+
+Without warning the submission over WIFI just stops, but does not throw an error. On the console (or TFT on T-Dislay) it documents the supposed submission, but no data reaches the MQTT broker. The current workaround after submitting our data every 20 seconds is to collect all garbage with `gc.collect()`.
 
 ### April 6th, 2022
 
