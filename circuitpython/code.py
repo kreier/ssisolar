@@ -1,7 +1,10 @@
 # SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
 # SPDX-License-Identifier: MIT
+# Adaptation for SSIS: @emwdx and @kreier 2022-04-27
 
-import time, gc
+import time
+import gc
+import rtc
 from random import randint
 
 import ssl
@@ -14,6 +17,7 @@ from adafruit_io.adafruit_io import IO_MQTT
 
 ## Set up analog in
 from analogio import AnalogIn
+cycle = 0
 
 input_voltage_1 = AnalogIn(board.A0)   # the current over 0.5 Ohm as voltage
 input_voltage_2 = AnalogIn(board.A5)   # the solar voltage divided by 5.7
@@ -21,6 +25,25 @@ input_voltage_2 = AnalogIn(board.A5)   # the solar voltage divided by 5.7
 def get_voltage(pin):
     return (pin.value * 3.3) / 65536
 
+class RTC(object):
+    @property
+    def datetime(self):
+        return time.struct_time((2022, 4, 11, 08, 0, 0, 0, 0, 0))
+
+r = rtc.RTC()
+def now_print():
+    print("{:02}/{:02}/{:04} {:02}:{:02}:{:02}".format(
+        r.datetime.tm_mday,
+        r.datetime.tm_mon,
+        r.datetime.tm_year,
+        r.datetime.tm_hour,
+        r.datetime.tm_min,
+        r.datetime.tm_sec),
+    )
+
+#now_print()
+#rtc.set_time_source(r)
+#now_print()
 
 ### WiFi ###
 
@@ -118,31 +141,38 @@ last = 0
 print("Publishing a new message every 20 seconds...")
 while True:
     # Explicitly pump the message loop.
-    
-    # Send a new message every 5 seconds.
+
+    # Send a new message every 20 seconds.
     if (time.monotonic() - last) >= 20:
-        input_value_1 = get_voltage(input_voltage_1) * 3 # the current over 0.5 Ohm as voltage
-        # offset correction: the measured solar voltage includes the voltage drop over the 
+        input_value_1 = get_voltage(input_voltage_1) * 15 - 0.2 # the current over 0.5 Ohm as voltage
+        # offset correction: the measured solar voltage includes the voltage drop over the
         # 0.5 Ohm current resistor. But now we've taken this measurement and can subtract
         # it to get the correct value: input_voltage_1 is now the voltage over a 0.5 Ohm
         # resistor times 3, so we could subtract this value divided by 3 from the solar voltage
         # the voltage we measure is the solar voltage divided by 5.7 (47 kOhm and 10 kOhm series)
         # so we have to divide the input_value_1 by 3 and 5.7 before subtracting from
         # the submitted value for input_value_2
-        
-        input_value_2 = get_voltage(input_voltage_2) - (input_value_1 / ( 5 ))
+
+        input_value_2 = get_voltage(input_voltage_2) - (input_value_1 / ( 25 ))
         # the solar voltage divided by 5.7
-        print("Publishing {0} and {1} to solar-stuff feeds.".format(input_value_1,input_value_2))
-        print(gc.mem_free(), "Bytes RAM free")
+        print("Send {0} A and {1} V to AIO. ".format(input_value_1,input_value_2), end='')
+        print(gc.mem_free(), "Bytes free. ", end='')
+        print('Cycle: {0}'.format(cycle))
+        cycle += 1
+        #now_print()
         gc.collect()
         try:
+            print("loop",end='')
             io.loop()
+            print(". solar-stuff-1", end='')
             io.publish("solar-stuff-1", input_value_1)
+            print("=current, solar-stuff-2", end='')
+            time.sleep(2.0)
             io.publish("solar-stuff-2", input_value_2)
+            print("=voltage.")
         except:
-            
             while(not_connected):
-                print("reconnecting")  
+                print("reconnecting")
                 io.connect()
                 time.sleep(2.0)
         last = time.monotonic()
