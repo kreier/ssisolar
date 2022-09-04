@@ -9,13 +9,17 @@ Documentation of Photovoltaic Potential at SSIS
 We want to explore the potential and challenges of photovoltaic systems by creating and maintaining an example system. For further investigation we want to collect as much data as possible.
 
 Here are some current feeds on the Adafruit IO MQTT platform:
-- https://io.adafruit.com/emwdx/dashboards/solar-dash
-- https://io.adafruit.com/emwdx/feeds/solar-stuff-2 for voltage
-- https://io.adafruit.com/emwdx/feeds/solar-stuff-1 for current
 - https://io.adafruit.com/kreier/dashboards/ssis-solar
 - https://io.adafruit.com/kreier/feeds/voltage
 - https://io.adafruit.com/kreier/feeds/current
 - https://io.adafruit.com/kreier/feeds/memory
+
+Feeds from March to June 2022:
+- https://io.adafruit.com/emwdx/dashboards/solar-dash
+- https://io.adafruit.com/emwdx/feeds/solar-stuff-2 for voltage
+- https://io.adafruit.com/emwdx/feeds/solar-stuff-1 for current
+
+
 
 ## History
 
