@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
 # SPDX-License-Identifier: MIT
 # Adaptation for SSIS by @emwdx and @kreier 2022-04-09
+# running on Metro M4
 
 import time
 import gc
